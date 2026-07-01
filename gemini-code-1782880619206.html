@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>प्रधान डिजिटल कार्यालय - ग्राम पंचायत चीह</title>
+    <!-- Google Fonts for Clean Hindi Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-blue: #0056b3;
+            --dark-blue: #003d82;
+            --light-bg: #f4f7fa;
+            --text-color: #333;
+            --border-color: #e2e8f0;
+            --green-btn: #0f8243;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans Devanagari', 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+        }
+
+        .panchayat-banner {
+            width: 100%;
+            height: 140px;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+        .panchayat-banner h2 {
+            font-size: 28px;
+            font-weight: 700;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--dark-blue), var(--primary-blue));
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-left { display: flex; align-items: center; gap: 15px; }
+        .gov-logo { width: 70px; height: 70px; object-fit: contain; border-radius: 4px; }
+        .header-title h1 { font-size: 24px; font-weight: 700; }
+        .header-title p { font-size: 15px; opacity: 0.9; }
+
+        .pradhan-profile-card {
+            background: white;
+            color: #333;
+            padding: 6px 20px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .avatar-img {
+            width: 40px; height: 40px; background: #ffccd5; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-size: 20px;
+        }
+
+        .profile-info h4 { color: #cc0033; font-size: 15px; font-weight: 700; }
+        .profile-info p { font-size: 12px; color: #666; }
+
+        .main-layout { display: flex; max-width: 1400px; margin: 20px auto; padding: 0 20px; gap: 20px; }
+
+        .sidebar {
+            width: 280px; background: white; border-radius: 8px; padding: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05); align-self: flex-start;
+        }
+
+        .sidebar-section-title {
+            padding: 5px 20px; font-size: 13px; text-transform: uppercase;
+            color: #777; font-weight: 700; margin-top: 15px; margin-bottom: 5px;
+        }
+
+        .sidebar-menu { list-style: none; }
+        .sidebar-menu li a {
+            display: flex; align-items: center; gap: 12px; padding: 10px 20px;
+            color: #4a5568; text-decoration: none; font-size: 14px; font-weight: 500;
+            transition: all 0.2s; cursor: pointer;
+        }
+
+        .sidebar-menu li a:hover, .sidebar-menu li.active a {
+            background-color: #e6f0fa; color: var(--primary-blue); border-left: 4px solid var(--primary-blue);
+        }
+
+        .content-area { flex-grow: 1; display: flex; flex-direction: column; gap: 20px; }
+
+        .welcome-bar {
+            background: white; padding: 15px 25px; border-radius: 8px;
+            display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .welcome-text h2 { font-size: 18px; color: #2d3748; }
+        .welcome-text p { font-size: 14px; color: #718096; }
+        .live-timer {
+            background: #edf2f7; padding: 8px 15px; border-radius: 6px;
+            display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 600;
+        }
+
+        .form-card, .module-card { background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); overflow: hidden; }
+        .card-header { background: var(--primary-blue); color: white; padding: 12px 20px; font-size: 16px; font-weight: 600; }
+
+        .form-grid { padding: 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+        .form-group label { display: block; margin-bottom: 6px; font-size: 13px; font-weight: 600; color: #4a5568; }
+
+        .form-control {
+            width: 100%; padding: 10px; border: 1px solid var(--border-color);
+            border-radius: 6px; font-size: 14px; outline: none; transition: border 0.2s;
+        }
+        .form-control:focus { border-color: var(--primary-blue); }
+        .file-input { padding: 6px; background: #f7fafc; }
+        .btn-row { grid-column: span 3; display: flex; justify-content: flex-end; margin-top: 10px; gap: 10px; }
+
+        .btn-generate {
+            background-color: var(--green-btn); color: white; padding: 10px 24px;
+            border: none; border-radius: 6px; font-size: 14px; font-weight: 600;
+            cursor: pointer; display: flex; align-items: center; gap: 8px;
+        }
+
+        .btn-danger {
+            background-color: #dc3545; color: white; padding: 8px 15px; border: none;
+            border-radius: 4px; font-size: 13px; cursor: pointer; margin-top: 5px;
+            display: inline-flex; align-items: center; gap: 6px;
+        }
+
+        .module-body { padding: 20px; }
+        .data-table { width: 100%; border-collapse: collapse; font-size: 14px; text-align: left; }
+        .data-table th, .data-table td { padding: 12px; border-bottom: 1px solid #edf2f7; }
+        .data-table th { background-color: #f7fafc; color: #4a5568; font-weight: 700; }
+
+        /* Certificate Blueprint Style */
+        .certificate-container {
+            background: #fff; padding: 40px 35px; border: 3px solid #002d62 !important; 
+            outline: 1px solid #002d62 !important; outline-offset: -8px; position: relative;
+            max-width: 850px; margin: 0 auto; box-shadow: 0 4px 12px rgba(0,0,0,0.05); z-index: 1;
+        }
+        
+        @media screen, print {
+            .certificate-container { background-color: rgba(255, 255, 255, 1) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        }
+
+        .certificate-container::before { content: "❖"; position: absolute; top: 12px; left: 12px; color: #002d62; font-size: 18px; }
+        .certificate-container::after { content: "❖"; position: absolute; top: 12px; right: 12px; color: #002d62; font-size: 18px; }
+
+        .cert-header-main {
+            display: flex; justify-content: space-between; align-items: center; text-align: center;
+            border-bottom: 1px double #ccc; padding-bottom: 15px; position: relative; z-index: 2;
+        }
+        .cert-logo-left, .cert-logo-right { width: 90px; height: 90px; object-fit: contain; }
+
+        .cert-office-title h2 { font-size: 24px; color: #000; font-weight: 700; margin-bottom: 4px; }
+        .cert-office-title p { font-size: 15px; color: #333; font-weight: 600; }
+
+        .badge-title-container { text-align: center; margin: 25px 0; }
+        .badge-title {
+            color: #000; font-size: 24px; font-weight: bold; display: inline-block;
+            border-bottom: 2px solid #000; padding-bottom: 2px; letter-spacing: 1px;
+        }
+
+        .cert-meta-info { display: flex; justify-content: space-between; font-size: 15px; font-weight: 600; margin-bottom: 30px; }
+        .cert-text-content { font-size: 17px; line-height: 2.5; text-align: justify; color: #111; position: relative; z-index: 2; }
+        .fill-space { font-weight: bold; color: #000; border-bottom: 1px dotted #333; padding: 0 4px; }
+
+        .cert-signatures { margin-top: 50px; display: flex; justify-content: flex-end; align-items: flex-end; position: relative; z-index: 2; }
+        .signature-block { text-align: center; font-size: 15px; line-height: 1.6; position: relative; padding: 10px 20px; min-width: 270px; }
+
+        .official-seal-overlay {
+            position: absolute; top: 45%; left: 50%; transform: translate(-50%, -50%);
+            width: 135px; height: 135px; object-fit: contain; opacity: 0.85; pointer-events: none; z-index: 3;
+        }
+
+        .preview-section { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .preview-title {
+            font-size: 16px; font-weight: 600; margin-bottom: 15px; color: #2d3748;
+            border-bottom: 2px solid var(--primary-blue); padding-bottom: 5px; display: inline-block;
+        }
+
+        .action-buttons { display: flex; justify-content: center; gap: 15px; margin-top: 25px; }
+        .btn-act {
+            padding: 10px 20px; border: none; border-radius: 4px; font-size: 14px;
+            font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; color: white;
+        }
+        .btn-blue { background-color: #0069d9; }
+        .btn-green { background-color: #218838; }
+        .btn-gray { background-color: #5a6268; }
+
+        footer { background-color: #003d82; color: white; text-align: center; padding: 12px 30px; font-size: 13px; display: flex; justify-content: space-between; margin-top: 40px; }
+
+        @media print {
+            body * { visibility: hidden; }
+            #printable-cert, #printable-cert * { visibility: visible; }
+            #printable-cert {
+                position: absolute; left: 0; top: 0; width: 100%; box-shadow: none; 
+                outline: 1px solid #002d62 !important; outline-offset: -8px !important;
+                border: 3px solid #002d62 !important; padding: 40px 35px !important;
+                -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important;
+            }
+            .official-seal-overlay { visibility: visible !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="panchayat-banner">
+        <h2>ग्राम पंचायत चीह - आपका डिजिटल गौरवशाली सफर</h2>
+    </div>
+
+    <header>
+        <div class="header-left">
+            <img id="main-hp-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/HP_Gov_Logo.png/220px-HP_Gov_Logo.png" alt="HP Gov Logo" class="gov-logo">
+            <div class="header-title">
+                <h1>प्रधान डिजिटल कार्यालय</h1>
+                <p id="hd-sub-title">ग्राम पंचायत चीह, विकास खण्ड: तीसा, जिला: चम्बा (हि.प्र.)</p>
+            </div>
+        </div>
+        
+        <div class="pradhan-profile-card">
+            <div class="avatar-img"><i class="fa-solid fa-user-tie" style="color: #cc0033;"></i></div>
+            <div class="profile-info">
+                <h4 id="hd-leader-name">श्रीमती पुष्पा देवी</h4>
+                <p>प्रधान, ग्राम पंचायत चीह</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-layout">
+        <aside class="sidebar">
+            <ul class="sidebar-menu" id="cert-menu-list">
+                <div class="sidebar-section-title">प्रमाण पत्र (प्रधान/उप प्रधान)</div>
+                <li class="active" onclick="switchCertificate('charitra', this)"><a><i class="fa-solid fa-file-invoice"></i> चरित्र प्रमाण पत्र</a></li>
+                <li onclick="switchCertificate('berojgari', this)"><a><i class="fa-solid fa-briefcase"></i> बेरोजगारी प्रमाण पत्र</a></li>
+                <li onclick="switchCertificate('moka_report', this)"><a><i class="fa-solid fa-eye"></i> मौका रिपोर्ट (पशुधन हानि)</a></li>
+
+                <div class="sidebar-section-title">प्रमाण पत्र (पंचायत सचिव)</div>
+                <li onclick="switchCertificate('noc', this)"><a><i class="fa-solid fa-file-shield"></i> अनापत्ति प्रमाण पत्र (NOC)</a></li>
+                <li onclick="switchCertificate('ayu', this)"><a><i class="fa-solid fa-cake-candles"></i> आयु प्रमाण पत्र</a></li>
+                <li onclick="switchCertificate('vidhwa', this)"><a><i class="fa-solid fa-user-xmark"></i> विधवा प्रमाण पत्र</a></li>
+                <li onclick="switchCertificate('parivar', this)"><a><i class="fa-solid fa-users"></i> पारिवारिक सदस्य प्रमाण पत्र</a></li>
+                <li onclick="switchCertificate('avivahit', this)"><a><i class="fa-solid fa-user-minus"></i> अविवाहित प्रमाण पत्र</a></li>
+                <li onclick="switchCertificate('alag_parivar', this)"><a><i class="fa-solid fa-house-chimney-crack"></i> अलग परिवार प्रमाण पत्र</a></li>
+
+                <div class="sidebar-section-title">अन्य कार्य</div>
+                <li id="btn-record" onclick="openModule('record', this)"><a><i class="fa-solid fa-folder-open"></i> रिकॉर्ड / आवेदन</a></li>
+                <li id="btn-settings" onclick="openModule('settings', this)"><a><i class="fa-solid fa-gear"></i> सेटिंग्स (लोकल फोटो अपलोड)</a></li>
+            </ul>
+        </aside>
+
+        <main class="content-area">
+            <div class="welcome-bar">
+                <div class="welcome-text">
+                    <h2 id="wl-user">स्वागत है, श्रीमती पुष्पा देवी</h2>
+                    <p>आप प्रधान डिजिटल कार्यालय पैनल में लॉगिन हैं।</p>
+                </div>
+                <div class="live-timer">
+                    <i class="fa-regular fa-calendar-days" style="color: var(--primary-blue);"></i>
+                    <span id="live-date-time"></span>
+                </div>
+            </div>
+
+            <!-- Dynamic Workspace Container -->
+            <div id="dynamic-workspace"></div>
+
+            <!-- Live Preview Window -->
+            <div class="preview-section" id="preview-card-panel">
+                <div class="preview-title">प्रमाण पत्र लाइव प्रीव्यू</div>
+                
+                <div class="certificate-container" id="printable-cert">
+                    <div class="cert-header-main">
+                        <img id="cert-hp-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/HP_Gov_Logo.png/220px-HP_Gov_Logo.png" class="cert-logo-left" alt="HP Gov Emblem">
+                        <div class="cert-office-title">
+                            <h2 id="cert-panchayat-name">कार्यालय ग्राम पंचायत चीह</h2>
+                            <p id="cert-block-district">विकास खण्ड तीसा जिला चम्बा (हि० प्र०)</p>
+                        </div>
+                        <img id="cert-panchayat-logo" src="https://upload.wikimedia.org/wikipedia/commons/5/5a/Seal_of_Grama_Panchayat.png" class="cert-logo-right" alt="Panchayat Logo">
+                    </div>
+
+                    <div class="badge-title-container">
+                        <div class="badge-title" id="cert-title-display">चरित्र प्रमाण पत्र</div>
+                    </div>
+
+                    <div class="cert-meta-info">
+                        <div>स्थान: <span id="cert-location-display">चीह</span></div>
+                        <div>दिनांक: <span id="cert-date-display">--/--/----</span></div>
+                    </div>
+
+                    <div class="cert-text-content" id="cert-body-text"></div>
+
+                    <div class="cert-signatures">
+                        <div class="signature-block">
+                            <img id="cert-stamp-img" src="https://upload.wikimedia.org/wikipedia/commons/5/5a/Seal_of_Grama_Panchayat.png" class="official-seal-overlay" alt="Seal">
+                            <br><br>
+                            <strong id="cert-designation-display" style="color: #000; font-size:16px; display:block; position:relative; z-index:4;">प्रधान / उप प्रधान</strong>
+                            <span id="cert-office-sub-display" style="position:relative; z-index:4; font-weight:600;">ग्राम पंचायत चीह<br>विकास खण्ड तीसा जिला चम्बा हि०प्र०</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn-act btn-blue" onclick="window.print()"><i class="fa-solid fa-print"></i> प्रिंट करें</button>
+                    <button class="btn-act btn-green" onclick="window.print()"><i class="fa-solid fa-file-pdf"></i> PDF डाउनलोड करें</button>
+                    <button class="btn-act btn-gray" onclick="resetForm()"><i class="fa-solid fa-rotate-left"></i> फॉर्म साफ करें</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <div>© 2026 प्रधान डिजिटल कार्यालय - ग्राम पंचायत चीह | सभी अधिकार सुरक्षित</div>
+        <div>Designed for Digital India</div>
+    </footer>
+
+    <script>
+        // Default Fallbacks
+        let defaultHpLogo = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/HP_Gov_Logo.png/220px-HP_Gov_Logo.png";
+        let defaultPanchayatLogo = "https://upload.wikimedia.org/wikipedia/commons/5/5a/Seal_of_Grama_Panchayat.png";
+        let defaultStamp = "https://upload.wikimedia.org/wikipedia/commons/5/5a/Seal_of_Grama_Panchayat.png";
+
+        let savedHpLogo = defaultHpLogo;
+        let savedPanchayatLogo = defaultPanchayatLogo;
+        let savedStamp = defaultStamp; 
+
+        let generatedRecords = [];
+        let currentType = 'charitra';
+
+        const certTemplates = {
+            charitra: {
+                title: "चरित्र प्रमाण पत्र",
+                signType: "pradhan",
+                body: (n, p, a, pr) => `प्रमाणित किया जाता है कि श्री/ श्रीमती /कुमारी <span class="fill-space">${n}</span> पुत्र / पुत्री / पत्नी <span class="fill-space">${p}</span> निवासी <span class="fill-space">${a}</span> का स्थाई निवासी है। <br><br>अतः यह भी प्रमाणित किया जाता है कि इलाके में इनका चाल चलन अच्छा है।<br><br><center><strong>अतः प्रमाण पत्र उचित कार्यवाही हेतु प्रेषित है।</strong></center>`
+            },
+            berojgari: {
+                title: "बेरोजगारी प्रमाण पत्र",
+                signType: "pradhan",
+                body: (n, p, a, pr) => `प्रमाणित किया जाता है कि श्री / श्रीमती / कुमारी <span class="fill-space">${n}</span> पुत्र / पुत्री / पत्नी <span class="fill-space">${p}</span> गाँव व डाकघर <span class="fill-space">${a}</span> का स्थाई निवासी है तथा उक्त व्यक्ति के परिवार का कोई भी सदस्य सरकारी व गैर सरकारी पद पर कार्यरत नहीं है !<br><br>अतः यह बेरोजगारी प्रमाण पत्र आगामी उचित कार्यवाही हेतु प्रेषित है।`
+            },
+            moka_report: {
+                title: "मौका रिपोर्ट (पशुधन हानि)",
+                signType: "pradhan",
+                body: (n, p, a, pr) => `स्थानीय निरीक्षण एवं मौका तस्दीक के आधार पर प्रमाणित किया जाता है कि श्री/श्रीमती <span class="fill-space">${n}</span> पुत्र/पुत्री/पत्नी <span class="fill-space">${p}</span> निवासी <span class="fill-space">${a}</span> के स्थाई निवासी हैं। <br><br>निरीक्षण के दौरान पाया गया कि उक्त व्यक्ति की एक **दुधारू गाय/पशु** घास चरते समय डांगे से नीचे गिर गई, जिसके कारण दुर्घटनास्थल पर ही उसकी दर्दनाक मृत्यु हो गई। <br><br>यह परिवार एक अत्यंत गरीब परिवार से संबंध रखता है तथा इनकी आजीविका का मुख्य साधन केवल पशुपालन ही है। इस अप्रत्याशित घटना से इनके परिवार को भारी आर्थिक क्षति पहुँची है। <br><br>अतः इन्हें नियमानुसार सरकारी राहत कोष से उचित एवं आवश्यक **मुआवजा** प्रदान किया जाना अत्यंत न्यायसंगत व उचित है। मौका रिपोर्ट आगामी कार्यवाही हेतु प्रेषित है।`
+            },
+            noc: {
+                title: "अनापत्ति प्रमाण पत्र (NOC)",
+                signType: "सचिव",
+                body: (n, p, a, pr) => `कार्यालय ग्राम पंचायत चीह द्वारा प्रमाणित किया जाता है कि आवेदक <span class="fill-space">${n}</span> पिता/पति <span class="fill-space">${p}</span> निवासी <span class="fill-space">${a}</span> को ग्राम पंचायत क्षेत्र के अंतर्गत <span class="fill-space" style="color:blue;">${pr || 'विशिष्ट कार्य / प्रयोजन'}</span> हेतु अनापत्ति प्रमाण पत्र जारी किया जाता है। इस संदर्भ में ग्राम पंचायत को कोई आपत्ति नहीं है।`
+            },
+            ayu: {
+                title: "आयु प्रमाण पत्र",
+                signType: "सचिव",
+                body: (n, p, a, dob, dobWords) => `ग्राम पंचायत रिकॉर्ड के अनुसार प्रमाणित किया जाता है कि श्री/कुमारी <span class="fill-space">${n}</span> आत्मज/आत्मजा <span class="fill-space">${p}</span> निवासी <span class="fill-space">${a}</span> की जन्म तिथि पंचायत परिवार रजिस्टर के अनुसार दिनांक <span class="fill-space" style="color:red;">${dob || '--/--/----'}</span> दर्ज है।<br><br>उक्त जन्म तिथि शब्दों में: <b><span style="color:blue;">"${dobWords || '........................................'}"</span></b> दर्ज है।`
+            },
+            vidhwa: {
+                title: "विधवा प्रमाण पत्र",
+                signType: "सचिव",
+                body: (n, p, a, pr) => `सत्यापित किया जाता है कि श्रीमती <span class="fill-space">${n}</span> निवासी <span class="fill-space">${a}</span> इस ग्राम पंचायत की निवासी हैं। इनके पति <span class="fill-space">${p}</span> का देहांत हो चुका है और वर्तमान में यह महिला एक विधवा के रूप में जीवन यापन कर रही हैं।`
+            },
+            parivar: {
+                title: "पारिवारिक सदस्य प्रमाण पत्र",
+                signType: "सचिव",
+                body: (n, p, a, pr) => `प्रमाणित किया जाता है कि श्री <span class="fill-space">${n}</span> पिता <span class="fill-space">${p}</span> निवासी <span class="fill-space">${a}</span> ग्राम पंचायत चीह के अंतर्गत आते हैं। परिवार रजिस्टर के अनुसार इनके परिवार में कुल <span class="fill-space" style="color:red;">${pr || '0'}</span> सदस्य शामिल हैं।`
+            },
+            avivahit: {
+                title: "अविवाहित प्रमाण पत्र",
+                signType: "सचिव",
+                body: (n, p, a, pr) => `स्थानीय जांच एवं रिकॉर्ड के आधार पर प्रमाणित किया जाता है कि श्री/कुमारी <span class="fill-space">${n}</span> आत्मज <span class="fill-space">${p}</span> निवासी <span class="fill-space">${a}</span> वर्तमान तिथि तक अविवाहित (Single) हैं।`
+            },
+            alag_parivar: {
+                title: "अलग परिवार प्रमाण पत्र",
+                signType: "सचिव",
+                body: (n, p, a, pr) => `प्रमाणित किया जाता है कि श्री <span class="fill-space">${n}</span> पिता <span class="fill-space">${p}</span> जो पहले <span class="fill-space">${a}</span> के सामूहिक परिवार में शामिल थे, अब मुख्य परिवार से पृथक होकर निवास कर रहे हैं।`
+            }
+        };
+
+        window.onload = function() {
+            const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
+            document.getElementById('live-date-time').innerText = new Date().toLocaleDateString('hi-IN', options);
+            switchCertificate('charitra');
+        };
+
+        function switchCertificate(type, element) {
+            currentType = type;
+            const template = certTemplates[type];
+
+            let extraFieldHTML = `
+                <div class="form-group">
+                    <label>${type === 'noc' ? 'NOC का उद्देश्य' : type === 'moka_report' ? 'टिप्पणी / अतिरिक्त विवरण' : 'उद्देश्य विवरण / संख्या'}</label>
+                    <input type="text" id="input-purpose" class="form-control" placeholder="विवरण लिखें" oninput="updateCertificate()">
+                </div>`;
+
+            if(type === 'ayu') {
+                extraFieldHTML = `
+                    <div class="form-group">
+                        <label><i class="fa-solid fa-calendar-days"></i> जन्म तिथि चुनें</label>
+                        <input type="date" id="input-dob" class="form-control" onchange="updateCertificate()">
+                    </div>`;
+            }
+
+            let namePlaceholder = type === 'moka_report' ? "श्रीमती समीना बेगम" : "आवेदक का नाम";
+            let parentPlaceholder = type === 'moka_report' ? "श्री अब्दुल रशीद" : "पिता / पति का नाम";
+            let addrPlaceholder = type === 'moka_report' ? "गाँव सालवी, डाकघर सिघोट, चुराह" : "गाँव और डाकघर";
+
+            document.getElementById('dynamic-workspace').innerHTML = `
+                <div class="form-card" id="form-card-panel">
+                    <div class="card-header" id="form-title">${template.title} प्रणाली</div>
+                    <div class="form-grid">
+                        <div class="form-group"><label>आवेदक का नाम</label><input type="text" id="input-name" placeholder="${namePlaceholder}" class="form-control" oninput="updateCertificate()"></div>
+                        <div class="form-group"><label>पिता / पति का नाम</label><input type="text" id="input-parent" placeholder="${parentPlaceholder}" class="form-control" oninput="updateCertificate()"></div>
+                        <div class="form-group"><label>पता / विवरण</label><input type="text" id="input-address" placeholder="${addrPlaceholder}" class="form-control" oninput="updateCertificate()"></div>
+                        ${extraFieldHTML}
+                        <div class="form-group"><label>जारी तिथि</label><input type="date" id="input-date" class="form-control" onchange="updateCertificate()"></div>
+                        <div class="btn-row"><button class="btn-generate" onclick="saveRecord()"><i class="fa-solid fa-file-circle-check"></i> डेटा सुरक्षित करें</button></div>
+                    </div>
+                </div>`;
+
+            document.getElementById('preview-card-panel').style.display = "block";
+            const menuItems = document.querySelectorAll('#cert-menu-list li');
+            menuItems.forEach(item => item.classList.remove('active'));
+            if(element) element.classList.add('active');
+
+            document.getElementById('cert-title-display').innerText = template.title;
+            document.getElementById('input-date').value = new Date().toISOString().split('T')[0];
+            
+            updateSignatureBlock(template.signType);
+            
+            if(type === 'moka_report') {
+                document.getElementById('input-name').value = "श्रीमती समीना बेगम";
+                document.getElementById('input-parent').value = "श्री अब्दुल रशीद";
+                document.getElementById('input-address').value = "गाँव सालवी, डाकघर सिघोट, चुराह";
+            }
+            updateCertificate();
+        }
+
+        function updateSignatureBlock(signType) {
+            const desig = document.getElementById('cert-designation-display');
+            const stamp = document.getElementById('cert-stamp-img');
+            
+            if(signType === 'pradhan') {
+                desig.innerText = "प्रधान / उप प्रधान";
+                if (savedStamp) { stamp.style.display = "block"; }
+            } else {
+                desig.innerText = "पंचायत सचिव";
+                stamp.style.display = "none"; 
+            }
+        }
+
+        function updateCertificate() {
+            const template = certTemplates[currentType];
+            let name = document.getElementById('input-name').value || "....................................";
+            let parent = document.getElementById('input-parent').value || "....................................";
+            let address = document.getElementById('input-address').value || "........................................................";
+            const origDate = document.getElementById('input-date').value;
+
+            if(currentType === 'ayu') {
+                const dob = document.getElementById('input-dob').value;
+                let formattedDob = "";
+                let dobWords = "";
+                if(dob) {
+                    const dParts = dob.split('-');
+                    formattedDob = `${dParts[2]}/${dParts[1]}/${dParts[0]}`;
+                    const months = ["जनवरी", "फरवरी", "मार्च", "अप्रैल", "मई", "जून", "जुलाई", "अगस्त", "सितंबर", "अक्टूबर", "नवंबर", "दिसंबर"];
+                    dobWords = `${parseInt(dParts[2])} ${months[parseInt(dParts[1]) - 1]} सन ${dParts[0]}`;
+                }
+                document.getElementById('cert-body-text').innerHTML = template.body(name, parent, address, formattedDob, dobWords);
+            } else {
+                const purpose = document.getElementById('input-purpose') ? document.getElementById('input-purpose').value : "";
+                document.getElementById('cert-body-text').innerHTML = template.body(name, parent, address, purpose);
+            }
+
+            if(origDate) {
+                const parts = origDate.split('-');
+                document.getElementById('cert-date-display').innerText = `${parts[2]}/${parts[1]}/${parts[0]}`;
+            }
+        }
+
+        function saveRecord() {
+            const name = document.getElementById('input-name').value;
+            const parent = document.getElementById('input-parent').value;
+            const address = document.getElementById('input-address').value;
+            const origDate = document.getElementById('input-date').value;
+            const purpose = document.getElementById('input-purpose') ? document.getElementById('input-purpose').value : "";
+            const dob = document.getElementById('input-dob') ? document.getElementById('input-dob').value : "";
+
+            if(!name) { alert("कृपया आवेदक का नाम भरें।"); return; }
+            
+            let parts = origDate.split('-');
+            let formattedDate = `${parts[2]}/${parts[1]}/${parts[0]}`;
+
+            let newRecord = {
+                id: "CH-" + Math.floor(10000 + Math.random() * 90000),
+                name: name,
+                parent: parent,
+                address: address,
+                typeKey: currentType,
+                type: certTemplates[currentType].title,
+                date: formattedDate,
+                rawDate: origDate,
+                purpose: purpose,
+                dob: dob
+            };
+
+            generatedRecords.push(newRecord);
+            alert(`रिकॉर्ड रजिस्टर संख्या ${newRecord.id} के तहत सुरक्षित कर दिया गया है!`);
+            
+            // सीधे रिकॉर्ड टैब खोलें ताकि एडमिन एंट्री देख सके
+            openModule('record', document.getElementById('btn-record'));
+        }
+
+        function loadOldRecord(index) {
+            let record = generatedRecords[index];
+            currentType = record.typeKey;
+            
+            // फॉर्म लोड करें
+            switchCertificate(record.typeKey);
+            
+            // डेटा फॉर्म में री-फिल करें
+            document.getElementById('input-name').value = record.name;
+            document.getElementById('input-parent').value = record.parent;
+            document.getElementById('input-address').value = record.address;
+            document.getElementById('input-date').value = record.rawDate;
+            if(document.getElementById('input-purpose')) document.getElementById('input-purpose').value = record.purpose;
+            if(document.getElementById('input-dob')) document.getElementById('input-dob').value = record.dob;
+            
+            // सर्टिफिकेट रेंडर करें
+            updateCertificate();
+            
+            // स्क्रीन स्क्रॉल करें प्रीव्यू की तरफ
+            document.getElementById('preview-card-panel').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function openModule(moduleType, element) {
+            const menuItems = document.querySelectorAll('#cert-menu-list li');
+            menuItems.forEach(item => item.classList.remove('active'));
+            if(element) element.classList.add('active');
+
+            const workspace = document.getElementById('dynamic-workspace');
+            const previewPanel = document.getElementById('preview-card-panel');
+
+            if(moduleType === 'record') {
+                previewPanel.style.display = "none";
+                let rows = generatedRecords.length === 0 ? "<tr><td colspan='5' align='center' style='color:#666;'>कोई रिकॉर्ड नहीं मिला</td></tr>" : "";
+                
+                generatedRecords.forEach((rec, index) => {
+                    rows += `<tr>
+                        <td><b>${rec.id}</b></td>
+                        <td><b>${rec.name}</b></td>
+                        <td>${rec.type}</td>
+                        <td>${rec.date}</td>
+                        <td>
+                            <button class="btn-generate" style="padding: 5px 12px; font-size: 12px; background-color: var(--primary-blue);" onclick="loadOldRecord(${index})">
+                                <i class="fa-solid fa-print"></i> देखें / प्रिंट
+                            </button>
+                        </td>
+                    </tr>`;
+                });
+
+                workspace.innerHTML = `
+                    <div class="module-card">
+                        <div class="card-header"><i class="fa-solid fa-folder-open"></i> जारी किए गए प्रमाण पत्रों का डिजिटल रजिस्टर (रिकॉर्ड)</div>
+                        <div class="module-body">
+                            <table class="data-table">
+                                <thead><tr><th>रजिस्टर ID</th><th>आवेदक का नाम</th><th>प्रमाण पत्र प्रकार</th><th>जारी तिथि</th><th>कार्रवाई</th></tr></thead>
+                                <tbody>${rows}</tbody>
+                            </table>
+                        </div>
+                    </div>`;
+            } 
+            else if(moduleType === 'settings') {
+                previewPanel.style.display = "none";
+                workspace.innerHTML = `
+                    <div class="module-card">
+                        <div class="card-header"><i class="fa-solid fa-gear"></i> कार्यालय सेटिंग्स और असली फोटो/मोहर अपलोडर</div>
+                        <div class="module-body">
+                            <div class="form-grid" style="grid-template-columns: repeat(2, 1fr);">
+                                <div class="form-group">
+                                    <label><i class="fa-solid fa-building-columns"></i> HP Government लोगो</label>
+                                    <input type="file" class="form-control file-input" accept="image/*" onchange="handleImageFile(this, 'hp')">
+                                </div>
+                                <div class="form-group">
+                                    <label><i class="fa-solid fa-shield-halved"></i> पंचायत लोगो (Panchayat Logo)</label>
+                                    <input type="file" class="form-control file-input" accept="image/*" onchange="handleImageFile(this, 'panchayat')">
+                                </div>
+                                <div class="form-group" style="grid-column: span 2;">
+                                    <label><i class="fa-solid fa-stamp"></i> प्रधान की आधिकारिक डिजिटल मोहर अपलोड करें</label>
+                                    <input type="file" class="form-control file-input" accept="image/*" onchange="handleImageFile(this, 'stamp')">
+                                </div>
+                                <div class="btn-row" style="grid-column: span 2;">
+                                    <button class="btn-generate" onclick="applySettings()"><i class="fa-solid fa-floppy-disk"></i> सेटिंग्स सेव करें</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+            }
+        }
+
+        function handleImageFile(input, imgType) {
+            const file = input.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) { 
+                if(imgType === 'hp') savedHpLogo = e.target.result;
+                if(imgType === 'panchayat') savedPanchayatLogo = e.target.result;
+                if(imgType === 'stamp') savedStamp = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function applySettings() {
+            document.getElementById('main-hp-logo').src = savedHpLogo;
+            document.getElementById('cert-hp-logo').src = savedHpLogo;
+            document.getElementById('cert-panchayat-logo').src = savedPanchayatLogo;
+            const stampImg = document.getElementById('cert-stamp-img');
+            if (savedStamp) {
+                stampImg.src = savedStamp;
+                if(certTemplates[currentType].signType === 'pradhan') stampImg.style.display = "block";
+            }
+            alert("सेटिंग्स सफलता-पूर्वक सेव हो गई हैं।");
+        }
+
+        function resetForm() {
+            document.getElementById('input-name').value = '';
+            document.getElementById('input-parent').value = '';
+            document.getElementById('input-address').value = '';
+            if(document.getElementById('input-purpose')) document.getElementById('input-purpose').value = '';
+            if(document.getElementById('input-dob')) document.getElementById('input-dob').value = '';
+            updateCertificate();
+        }
+    </script>
+</body>
+</html>
